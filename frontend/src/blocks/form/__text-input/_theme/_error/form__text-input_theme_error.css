@@ -1,0 +1,3 @@
+.form__text-input_theme_error:focus {
+border-bottom:1px solid red;
+}

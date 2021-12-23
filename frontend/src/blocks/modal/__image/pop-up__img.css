@@ -1,0 +1,14 @@
+.modal__img{
+    display: block;
+    cursor: default;
+    max-width: 75vw;
+    max-height: 75vh;
+    object-fit: cover;
+    height: 100%;
+}
+@media screen and (max-width: 765px) {
+.modal__image {
+    object-fit: cover;
+    object-position: center;
+}
+}

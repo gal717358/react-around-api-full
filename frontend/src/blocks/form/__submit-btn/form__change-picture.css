@@ -1,0 +1,25 @@
+.form__change-picture {
+    box-sizing: border-box;
+    padding-bottom: 0;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+    border: 0;
+    border-radius: 2px;
+    min-height: 50px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.22;
+}
+.form__change-picture:hover{
+    opacity: 0.8;
+    transition: 0.3s;
+} 
+
+@media screen and (max-width: 580px) {
+    .form__change-picture {
+        font-size: 14px;
+        line-height: 17px;
+    }
+    
+}

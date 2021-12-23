@@ -1,0 +1,26 @@
+.modal__close-btn {
+    height: 48px;
+    width: 48px;
+    padding: 0;
+    border: none;
+    position: absolute;
+    top: -46px;
+    right: -46px;
+    cursor: pointer;
+    background-color: transparent;
+    background-image: url(./Close-Icon.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.modal__close-btn:hover {
+    opacity: 0.6;
+    transition: 0.3s;
+    z-index: 0;
+}
+@media screen and (max-width: 580px) {
+    .modal__close-btn {
+        right: 5px;
+        height: 26px;
+        width: 26px;
+    }
+}

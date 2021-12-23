@@ -1,0 +1,15 @@
+.modal__container_type_popup{
+      position: relative;
+  background-color: transparent;
+  max-width: 75vw;
+  width: auto;
+}
+
+@media screen and (max-width: 765px) {
+.modal__container_type_popup{
+position: relative;
+background-color: transparent;
+max-width: 90%;
+height: 299px;
+}
+}

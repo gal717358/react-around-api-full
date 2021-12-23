@@ -1,0 +1,25 @@
+.modal__close-popup {
+    height: 48px;
+    width: 48px;
+    padding: 0;
+    border: none;
+    position: absolute;
+    top: -46px;
+    right: -46px;
+    cursor: pointer;
+    background-color: transparent;
+    background-image: url(./Close-Icon.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.modal__close_type_popup:hover {
+    opacity: 0.6;
+    transition: 0.3s;
+}
+@media screen and (max-width: 580px) {
+    .modal__close_type_popup {
+        right: 5px;
+        height: 26px;
+        width: 26px;
+    }
+}

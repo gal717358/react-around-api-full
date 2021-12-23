@@ -27,6 +27,7 @@ console.log(process.env.NODE_ENV);
 
 app.use(cors());
 app.options('*', cors());
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(requestLogger);
