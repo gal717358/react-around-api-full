@@ -1,0 +1,14 @@
+GET http://localhost:3000/users
+###
+
+GET http://localhost:3000/users/dbfe53c3c4d568240378b0c6
+
+###
+
+GET http://localhost:3000/users/d285e3dceed844f902650f40
+###
+
+GET http://localhost:3000/cards
+
+###
+GET http://localhost:3000/Gal
