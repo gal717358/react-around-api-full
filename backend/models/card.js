@@ -10,18 +10,23 @@ const cardsSchema = new mongoose.Schema({
   },
   link: {
     type: String,
+    required: true,
     validate: {
-      validator: (avatar) => validator.isUrl(avatar),
-      message: 'The url you provided is not valid',
+      validator(url) {
+        return validator.isURL(url);
+      },
+      message: 'url is not valid',
     },
   },
   owner: {
-    type: Object,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
     required: true,
   },
   likes: {
-    type: Object,
-    default: Array,
+    type: [mongoose.Schema.Types.ObjectId],
+    default: [],
+    ref: 'user',
   },
   createdAt: {
     type: Date,

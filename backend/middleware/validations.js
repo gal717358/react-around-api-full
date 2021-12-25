@@ -20,19 +20,17 @@ const validateAvatar = celebrate({
     avatar: Joi.string().required().custom(validateURL),
   }),
 });
-
-const validateInfo = celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    avatar: Joi.string().required().custom(validateURL),
-    about: Joi.string().min(2).max(30),
-  }),
-});
-
 const validateCard = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     link: Joi.string().required().custom(validateURL),
+  }),
+});
+
+const validateInfo = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30),
+    about: Joi.string().min(2).max(30),
   }),
 });
 

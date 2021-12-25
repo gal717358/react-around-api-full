@@ -15,14 +15,11 @@ console.log(process.env.NODE_ENV);
 
 const app = express();
 const { PORT = 3000 } = process.env;
-mongoose.connect('mongodb://localhost:27017/aroundb');
-mongoose.connection
-  .once('open', () => {
-    console.log('connection has been made');
-  })
-  .on('error', (error) => {
-    console.log('connection error', error);
-  });
+mongoose.connect('mongodb://localhost:27017/aroundb', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
 console.log(process.env.NODE_ENV);
 
 app.use(cors());

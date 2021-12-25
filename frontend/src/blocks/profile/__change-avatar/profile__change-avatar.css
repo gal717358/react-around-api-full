@@ -1,0 +1,27 @@
+.profile__change-avatar {
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  position: static;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-right: 30px;
+  width: 120px;
+  height: 120px;
+  z-index: 0;
+}
+.profile__change-avatar:hover {
+  z-index: 0;
+  background-color: none;
+  background-image: url("../../../images/penEditPicture.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media screen and (max-width: 765px) {
+  .profile__change-avatar {
+    margin-bottom: 26px;
+    align-self: center;
+  }
+}

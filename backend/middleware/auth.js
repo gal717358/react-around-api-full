@@ -14,7 +14,6 @@ const extractBearerToken = (header) => header.replace('Bearer ', '');
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
-  console.log(req.headers);
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
     handleAuthError(res);

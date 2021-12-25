@@ -1,0 +1,11 @@
+.modal__infoToolTip_image{
+    display: flex;
+    flex-direction: column;
+    margin: 60px auto 32px;
+    width: 120px;
+    height: 120px;
+    background-color:transparent ;
+    background-repeat: none;
+    border-color: transparent;
+    border-radius: none;
+}

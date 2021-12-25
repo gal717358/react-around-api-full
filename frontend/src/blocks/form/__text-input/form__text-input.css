@@ -1,0 +1,17 @@
+.form__text-input {
+    padding: 0 0 13px;
+    background-color: transparent;
+    border: none;
+    border-radius: 0px;
+    border-bottom: 1px solid rgba(84, 84, 84, 0.2);
+    color: #000;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.2;
+    outline: none;
+    margin-bottom: 30px;
+}
+.form__text-input:focus{
+    border-bottom:1px solid black;
+}

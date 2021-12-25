@@ -1,0 +1,11 @@
+.modal_type_delete-card{
+    position: fixed;
+    width: 433px;
+    height: 540px;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
