@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'https://api.gal717358.students.nomoreparties.site';
 
 const handleResponse = (res) => {
   if (res.ok) {
