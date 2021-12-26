@@ -18,13 +18,13 @@ mongoose.connect('mongodb://localhost:27017/aroundb', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+app.use(helmet());
 
 app.use(cors());
 app.options('*', cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(helmet());
 app.use(requestLogger);
 
 app.get('/crash-test', () => {
