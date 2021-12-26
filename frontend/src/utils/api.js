@@ -87,7 +87,7 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: "http://api.gal717358.students.nomoreparties.site",
+  baseUrl: "https://api.gal717358.students.nomoreparties.site",
 
 });
 
