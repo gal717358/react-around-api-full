@@ -20,7 +20,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "npm run build && scp -r -i path/to/ssh/key ./build/* gal717358@34.82.57.82:/home/gal717358/react-around-api-full/frontend/build"
+    "deploy": "npm run build && scp -r ./build/* gal717358@gal717358.students.nomoreparties.site:/home/gal717358/react-around-api-full/frontend/build"
   },
   "eslintConfig": {
     "extends": [
