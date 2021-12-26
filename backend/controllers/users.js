@@ -1,10 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const NotFoundError = require('../middleware/errors/NotFoundError');
+const NotFoundError = require('../middleware/errors/notFoundError');
 const User = require('../models/user');
-const BadRequestError = require('../middleware/errors/BadRequestError');
-const ConflictError = require('../middleware/errors/ConflictError');
-const AuthenticationError = require('../middleware/errors/AuthenticationError');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
@@ -31,11 +28,12 @@ module.exports.getUserById = ('/users/:id',
   User.findById(req.user._id)
     .select('name about avatar _id')
     .orFail(new Error('card ID not found'))
-    .then((user) => {
-      if (user) {
-        res.status(200).send({ data: user });
-      } else {
+    .then((user) => res.status(200).send({ data: user }))
+    .catch((err) => {
+      if (err.message === 'card ID not found') {
         throw new NotFoundError('Id not found in the database');
+      } if (err.name === 'CastError') {
+        res.status(400).send({ message: 'Invalid Id' });
       }
     })
     .catch(next);
@@ -48,10 +46,10 @@ module.exports.updateProfile = ((req, res, next) => {
   User.findByIdAndUpdate(req.user._id, { name, about }, opts)
     .then((user) => res.status(200).send({ data: user }))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        throw new BadRequestError('Cannot update the user');
+      console.log(err.name);
+      if (err.name === 'CastError') {
+        res.status(400).send({ message: 'User not found in the database' });
       }
-      next(err);
     })
     .catch(next);
 });
@@ -68,10 +66,9 @@ module.exports.updateAvatar = (req, res, next) => {
       res.status(200).send({ data: user });
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        throw new BadRequestError('Cannot update the image');
+      if (err.name === 'CastError') {
+        res.status(400).send({ message: 'User not found in the database' });
       }
-      next(err);
     })
     .catch(next);
 };
@@ -89,11 +86,13 @@ module.exports.createUser = (req, res, next) => {
       _id: user._id,
     }))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        throw new BadRequestError('The email and password are required');
-      } else if (err.name === 'MongoServerError') {
-        throw new ConflictError('Something went wrong');
+      if (err.name === 'MongoServerError') {
+        res.status(409).send({ message: 'The user already exist' });
       }
+      if (err.name === 'ValidationError') {
+        res.status(400).send({ message: 'the email and password are required' });
+      }
+      console.log(err);
     })
     .catch(next);
 };
@@ -102,16 +101,12 @@ module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      if (user) {
-        const token = jwt.sign(
-          { _id: user._id },
-          NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-          { expiresIn: '7d' },
-        );
-        res.send({ token });
-      } if (!user) {
-        throw new AuthenticationError('authorization failed');
-      }
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        { expiresIn: '7d' },
+      );
+      res.send({ token });
     })
     .catch(next);
 };

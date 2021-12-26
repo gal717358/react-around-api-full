@@ -1,8 +1,5 @@
 const Card = require('../models/card');
-
-const BadRequestError = require('../middleware/errors/BadRequestError');
-const ForbiddenError = require('../middleware/errors/ForbiddenError');
-const NotFoundError = require('../middleware/errors/NotFoundError');
+const NotFoundError = require('../middleware/errors/notFoundError');
 
 const handleCardErrors = (err) => {
   const errors = { name: '', link: '' };
@@ -25,16 +22,13 @@ module.exports.getAllCards = ('/cards',
 module.exports.getCardByID = ('/cards/:id',
 (req, res, next) => {
   Card.findById(req.user._id)
-    .orFail(new Error('card ID not exist'))
     .select('name link owner likes createdAt _id')
     .then((card) => {
       res.send({ data: card });
     })
     .catch((err) => {
-      if (err.message === 'card ID not found') {
-        throw new NotFoundError('Id not found in the database');
-      } if (err.name === 'CastError') {
-        throw new BadRequestError('Invalid id');
+      if (err.name === 'CastError') {
+        res.status(400).send({ message: 'Not Valid id' });
       }
     })
     .catch(next);
@@ -43,7 +37,7 @@ module.exports.getCardByID = ('/cards/:id',
 module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
-    .then((card) => res.status(201).send({ data: card }))
+    .then((card) => res.send({ data: card }))
     .catch((err) => {
       const errors = handleCardErrors(err);
       if (errors) {
@@ -57,12 +51,12 @@ module.exports.deleteCardById = (req, res, next) => {
   Card.findById(req.params.cardId)
     .then((card) => {
       if (!card) {
-        throw new NotFoundError('Card not found in the database');
+        throw new Error('card was not found');
       }
       if (card.owner.toString() === req.user._id.toString()) {
         Card.deleteOne(card).then(() => res.send({ data: card }));
       } else {
-        throw new ForbiddenError('You are not the owner of this card');
+        throw new Error('you are not the owner of this card');
       }
     })
     .catch(next);
@@ -76,10 +70,10 @@ module.exports.likeCard = (
       { $addToSet: { likes: [req.user._id] } },
       opts,
     )
-      .orFail(new NotFoundError('non found card'))
+      .orFail(new Error('card ID not found'))
       .then((card) => res.status(200).send({ data: card }))
       .catch((err) => {
-        if (err.message === 'non found card') {
+        if (err.message === 'card ID not found') {
           throw new NotFoundError('Id not found in the database');
         }
         if (err.name === 'CastError') {

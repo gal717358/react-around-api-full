@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const cors = require('cors');
-const helmet = require('helmet');
 const cardsRouter = require('./routes/cards');
 const usersRouter = require('./routes/users');
 const auth = require('./middleware/auth');
@@ -12,19 +11,22 @@ const { validateUser } = require('./middleware/validations');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 require('dotenv').config();
 
+console.log(process.env.NODE_ENV);
+
 const app = express();
 const { PORT = 3000 } = process.env;
 mongoose.connect('mongodb://localhost:27017/aroundb', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-app.use(helmet());
+
+console.log(process.env.NODE_ENV);
+
 app.use(cors());
 app.options('*', cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 app.use(requestLogger);
 
 app.get('/crash-test', () => {
