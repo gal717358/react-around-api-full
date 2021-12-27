@@ -16,10 +16,7 @@ const NotFoundError = require('./middleware/errors/NotFoundError');
 
 const app = express();
 const { PORT = 3000 } = process.env;
-mongoose.connect('mongodb://localhost:27017/aroundb', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect('mongodb://localhost:27017/aroundb');
 app.use(helmet());
 
 app.use(cors());
