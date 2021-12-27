@@ -92,7 +92,7 @@ module.exports.createUser = (req, res, next) => {
       if (err.name === 'ValidationError') {
         throw new BadRequestError('The email and password are required');
       } else if (err.name === 'MongoServerError') {
-        throw new ConflictError('Something went wrong');
+        throw new ConflictError('User with this email already exist');
       }
     })
     .catch(next);
@@ -109,7 +109,9 @@ module.exports.login = (req, res, next) => {
           { expiresIn: '7d' },
         );
         res.send({ token });
-      } if (!user) {
+      }
+    }).catch((err) => {
+      if (err) {
         throw new AuthenticationError('authorization failed');
       }
     })

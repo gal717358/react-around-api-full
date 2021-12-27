@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const cors = require('cors');
-// const helmet = require('helmet');
+const helmet = require('helmet');
 const cardsRouter = require('./routes/cards');
 const usersRouter = require('./routes/users');
 const auth = require('./middleware/auth');
@@ -20,7 +20,7 @@ mongoose.connect('mongodb://localhost:27017/aroundb', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-// app.use(helmet());
+app.use(helmet());
 
 app.use(cors());
 app.options('*', cors());
@@ -54,12 +54,10 @@ app.use(errorLogger);
 app.use(errors());
 
 app.use((err, req, res, next) => {
-  res.status(err.status || 500);
-  res.send({
-    error: {
-      status: err.status || 500,
-      message: err.message,
-    },
+  const { statusCode = 500, message } = err;
+
+  res.status(statusCode).send({
+    message: statusCode === 500 ? 'Server error' : message,
   });
 });
 

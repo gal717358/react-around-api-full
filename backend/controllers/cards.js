@@ -25,15 +25,17 @@ module.exports.getCardByID = ('/cards/:id',
 (req, res, next) => {
   Card.findById(req.user._id)
     .select('name link owner likes createdAt _id')
-    .orFail(new Error('card ID not found'))
+    .orFail(new NotFoundError('Id not found in the database'))
     .then((card) => {
       res.send({ data: card });
     })
     .catch((err) => {
-      if (err.message === 'card ID not found') {
+      if (err.statusCode === 404) {
         throw new NotFoundError('Id not found in the database');
-      } if (err.name === 'CastError') {
+      } if (err.statusCode === 400) {
         throw new BadRequestError('Invalid id');
+      } else {
+        next(err);
       }
     })
     .catch(next);
@@ -46,7 +48,9 @@ module.exports.createCard = (req, res, next) => {
     .catch((err) => {
       const errors = handleCardErrors(err);
       if (errors) {
-        res.status(400).send({ errors });
+        throw new BadRequestError({ errors });
+      } else {
+        next(err);
       }
     })
     .catch(next);
@@ -83,6 +87,8 @@ module.exports.likeCard = (
         }
         if (err.name === 'CastError') {
           res.status(400).send({ message: 'Invalid Id' });
+        } else {
+          next(err);
         }
       })
       .catch(next);
