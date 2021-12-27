@@ -4,7 +4,7 @@ const handleResponse = (res) => {
   if (res.ok) {
     return res.json();
   }
-  return Promise.reject(`${res.status}`);
+  return Promise.reject(`${res.status}: ${res.statusText}`);
 };
 
 export const register = ({ email, password }) => {
