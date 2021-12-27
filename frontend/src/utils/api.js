@@ -87,6 +87,9 @@ class Api {
 }
 
 export const api = new Api({
+  
+  // baseUrl: "http://localhost:3000",
+
   baseUrl: "https://api.gal717358.students.nomoreparties.site",
 });
 
