@@ -89,9 +89,9 @@ module.exports.createUser = (req, res, next) => {
       _id: user._id,
     }))
     .catch((err) => {
-      if (err.statusCode === 409) {
+      if (err.name === 'ValidationError') {
         throw new BadRequestError('The email and password are required');
-      } else if (err.name === 'MongoServerError') {
+      } else if (err) {
         throw new ConflictError('User with this email already exist');
       }
     })
