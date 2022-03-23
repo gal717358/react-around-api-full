@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.gal717358.students.nomoreparties.site';
+export const BASE_URL = 'https://api.around-us.students.nomoreparties.sbs';
 
 const handleResponse = (res) => {
   if (res.ok) {
